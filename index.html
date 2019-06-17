@@ -19,8 +19,8 @@ for(var i=0; i<a.length; i++) this.entries.push(a[i]);
 }
 static solve(array) {
 array = new BANArray(array);
-if(array.length==1) return new Decimal(a);
-if(array.length==2) return Decimal.pow(a,b);
+if(array.length==1) return formatDecimal(new Decimal(array[0]));
+if(array.length==2) return formatDecimal(Decimal.pow(array[0],array[1]));
 var newArray = new BANArray(array); // variable for ths stored array
 for(var i=0; i<array.length; i++) {
 if(i.constructor==BANArray) newarray[i] = BANArray.solve(newArray[i]);
