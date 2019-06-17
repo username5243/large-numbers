@@ -20,7 +20,7 @@ for(var i=0; i<a.length; i++) this.entries.push(a[i]);
 static solve(array) {
 array = new BANArray(array);
 if(array.entries.length==1) return formatDecimal(new Decimal(array.entries[0]));
-if(array.entries.length==2) return formatDecimal(Decimal.pow(arrayentries[0],array.entries[1]));
+if(array.entries.length==2) return formatDecimal(Decimal.pow(array.entries[0],array.entries[1]));
 var newArray = new BANArray(array); // variable for ths stored array
 for(var i=0; i<array.entries.length; i++) {
 if(newArray.entries[i].constructor==BANArray) newarray.entries[i] = BANArray.solve(newArray.entries[i]);
