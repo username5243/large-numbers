@@ -13,7 +13,7 @@ else return "Infinity";
 
 function factorial(a) { // calculates a!
 a = new Decimal(a)
-if(a.lt(1000&&(a.floor().sub(a).lt(new Decimal(0.000000000000001))||a.floor().sub(a).gt(new Decimal(0.999999999999999))) { // is a an integer less than 1000? If so, calculate it exactly.
+if(a.lt(1000)&&(a.floor().sub(a).lt(new Decimal(0.000000000000001))||a.floor().sub(a).gt(new Decimal(0.999999999999999))) { // is a an integer less than 1000? If so, calculate it exactly.
 var result = new Decimal(0);
 while(a.gte(1)) {
 result = result.mul(a);
