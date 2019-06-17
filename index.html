@@ -6,9 +6,24 @@ function formatDecimal(a) {
 a = new Decimal(a);
 var e = Math.floor(a.logarithm);
 if(e<308) return Math.floor(Math.pow(10,a.logarithm));
-else if(e>308&&e<9e15) return Math.pow(10,a.logarithm-e)+"e"+e;
+else if(e>308&&e<9e15) return Math.pow(10,a.logarithm-e)+"e+"+e;
 else if(e>9e15&&3<1e308) return "e"+e;
 else return "Infinity";
+}
+
+function factorial(a) { // calculates a!
+a = new Decimal(a)
+if(a.lt(1000&&(a.floor().sub(a).lt(new Decimal(0.000000000000001))||a.floor().sub(a).gt(new Decimal(0.999999999999999))) { // is a an integer less than 1000? If so, calculate it exactly.
+var result = new Decimal(0);
+while(a.gte(1)) {
+result = result.mul(a);
+a = a.sub(1);
+}
+return new Decimal(result);
+}
+else { // if it's a non-integer, or over 1000, use Stirling's approximation. (Warning: Stirling's approximation is not exact. Inaccurate results for low non-integers are possible. Use with care.)
+return Decimal.pow(Decimal.mul(2,Decimal.mul(a,3.141592653589793)),0.5).mul(Decimal.pow(a.divide(2.718281828459045)),a);
+}
 }
 
 class BANArray {
@@ -75,6 +90,22 @@ if(array.entries.length==1) return formatDecimal(Decimal.pow(10,array.entries[0]
 var newArray = new ExEExpression(array); // variable for the stored array
 for(var i=0; i<array.entries.length; i++) {
 if(newArray.entries[i].constructor==ExEExpression) newarray.entries[i] = ExEExpression.solve(newArray.entries[i]);
+return new Array; // function finishes at this point
+}
+}
+}
+
+class HANArray {
+constructor(a) {
+this.entries = [];
+for(var i=0; i<a.length; i++) this.entries.push(a[i]);
+}
+static solve(array) {
+if(array.constructor!=HANArray) array = new HANArray(array);
+if(array.entries.length==1) return formatDecimal(factorial(array.entries[0]));
+var newArray = new HANArray(array); // variable for the stored array
+for(var i=0; i<array.entries.length; i++) {
+if(newArray.entries[i].constructor==HANArray) newarray.entries[i] = HANArray.solve(newArray.entries[i]);
 return new Array; // function finishes at this point
 }
 }
