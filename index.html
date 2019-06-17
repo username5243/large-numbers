@@ -22,7 +22,7 @@ a = a.sub(1);
 return new Decimal(result);
 }
 else { // if it's a non-integer, or over 1000, use Stirling's approximation. (Warning: Stirling's approximation is not exact. Inaccurate results for low non-integers are possible. Use with care.)
-return Decimal.pow(Decimal.mul(2,Decimal.mul(a,3.141592653589793)),0.5).mul(Decimal.pow(a.div(2.718281828459045)),a);
+return a.mul(Math.PI*2).pow(0.5).mul(a.div(Math.E).pow(a));
 }
 }
 
