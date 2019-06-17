@@ -10,6 +10,11 @@ static solve(array) {
 array = new BANArray(array);
 if(array.length==1) return new Decimal(a);
 if(array.length==2) return Decimal.pow(a,b);
+var newArray = new BANArray(array); // variable for ths stored array
+for(var i=0; i<array.length; i++) {
+if(i.constructor==BANArray) newarray[i] = BANArray.solve(newArray[i]);
+return new Array; // function finishes at this point
+}
 }
 }
 </script>
