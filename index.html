@@ -2,10 +2,20 @@
 <head>
 <script type="text/javascript" src="logarithmica_numerus_lite.js"></script>
 <script>
+function formatDecimal(a) {
+a = new Decimal(a);
+var e = Math.floor(a.logarithm);
+if(e<308) return Math.floor(Math.pow(10,a.logarithm));
+else if(e>308&&e<9e15) return Math.pow(10,a.logarithm-e)+"e"+e;
+else if(e>9e15&&3<1e308) return "e"+e;
+else return "Infinity";
+}
+
+
 class BANArray {
 constructor(a) {
-var entries = [];
-for(var i=0; i<a.length; i++) entries.push(a[i]);
+this.entries = [];
+for(var i=0; i<a.length; i++) this.entries.push(a[i]);
 }
 static solve(array) {
 array = new BANArray(array);
