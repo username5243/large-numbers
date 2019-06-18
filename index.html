@@ -50,9 +50,9 @@ return newArray; // function finishes at this point
 count++;
 }
 if(array.entries[2]>1) { // recursion rule
+newArray.entries[2]--;
 newArray2.entries[1]--;
 newArray.entries[1] = newArray2;
-newArray.entries[2]--;
 return newArray;
 }
 }
