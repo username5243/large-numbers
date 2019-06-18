@@ -5,7 +5,7 @@
 function formatDecimal(a) {
 a = new Decimal(a);
 var e = Math.floor(a.logarithm);
-if(e<308) return Math.floor(Math.pow(10,a.logarithm));
+if(e<308) return Math.round(Math.pow(10,a.logarithm));
 else if(e>308&&e<9e15) return Math.pow(10,a.logarithm-e)+"e+"+e;
 else if(e>9e15&&3<1e308) return "e"+e;
 else return "Infinity";
@@ -31,14 +31,14 @@ constructor(a) {
 this.entries = [];
 for(var i=0; i<a.length; i++) this.entries.push(a[i]);
 }
-static solve(array) {
+solve() {
+var array = this;
 if(array.constructor!=BANArray) array = new BANArray(array);
 var newArray = new BANArray(array.entries); // variable for the stored array
 var newerArray = new BANArray(newArray.entries); // second copy of the array
-for(var i=0;i<array.length;i++) {
-console.log(array.entries[i].constructor)
+for(var i=0;i<array.entries.length;i++) {
 if(array.entries[i].constructor==BANArray) {
-var temp = BANArray.solve(array.entries[i]);
+var temp = array.entries[i].solve();
 newArray.entries[i] = temp;
 return newArray;
 }
@@ -49,11 +49,24 @@ if(array.entries[array.entries.length-1]==1) {
 newArray.entries.pop(); // remove trailing 1s
 return newArray; // function breaks at this point if this rule was executed
 }
+if(array.entries[2]==1) { // if the third entry is 1, and we've hit this point in the function, we must have at least 1 non-1 entry from the 4th entry onwards.
+for(var i=3;i<array.entries.length;i++) {
+if(array.entries[i]>1) {
+newArray.entries[i]--;
+newerArray.entries[1]--;
+for(var j=1;j<i-1;j++) newArray.entries[j]=newArray.entries[0];
+newArray.entries[i-1] = newerArray;
+return newArray;
+}
+}
+}
+if(array.entries[2]>1) {
 if(array.entries[2]>1) { // recursion rule
 newArray.entries[2]--;
 newerArray.entries[1]--;
 newArray.entries[1] = newerArray;
 return newArray;
+}
 }
 }
 }
@@ -63,11 +76,12 @@ constructor(a) {
 this.entries = [];
 for(var i=0; i<a.length; i++) this.entries.push(a[i]);
 }
-static solve(array) {
+solve() {
+var array = this;
 if(array.constructor!=SANArray) array = new SANArray(array);
 if(array.entries.length==1) return formatDecimal(new Decimal(array.entries[0]));
 if(array.entries.length==2) return formatDecimal(Decimal.pow(array.entries[0],array.entries[1]));
-var newArray = new SANArray(array); // variable for the stored array
+var newArray = new SANArray(array.entries); // variable for the stored array
 for(var i=0; i<array.entries.length; i++) {
 if(newArray.entries[i].constructor==SANArray) newarray.entries[i] = SANArray.solve(newArray.entries[i]);
 return new Array; // function finishes at this point
@@ -76,17 +90,18 @@ return new Array; // function finishes at this point
 }
 
 class UNANArray {
-constructor(a) {
+constructor(b,i,a) {
+this.base = b;
+this.iterator = i;
 this.entries = [];
-for(var i=0; i<a.length; i++) this.entries.push(a[i]);
+for(var j=0; j<a.length; j++) this.entries.push(a[j]);
 }
-static solve(array) {
+solve() {
+var array = this;
 if(array.constructor!=UNANArray) array = new UNANArray(array);
-if(array.entries.length==1) return formatDecimal(new Decimal(array.entries[0]));
-if(array.entries.length==2) return formatDecimal(Decimal.mul(array.entries[0],array.entries[1]));
-if(array.entries.length==3&&array.entries[2]==0) return formatDecimal(Decimal.mul(array.entries[0],array.entries[1]));
-if(array.entries.length==3&&array.entries[2]==1) return formatDecimal(Decimal.pow(array.entries[0],array.entries[1]));
-var newArray = new UNANArray(array); // variable for the stored array
+if(array.entries.length==1&&array.entries[0]==0) return formatDecimal(Decimal.mul(array.base,array.iterator));
+if(array.entries.length==1&&array.entries[0]==1) return formatDecimal(Decimal.pow(array.base,array.iterator));
+var newArray = new UNANArray(array.base,array.iterator,array.entries); // variable for the stored array
 for(var i=0; i<array.entries.length; i++) {
 if(newArray.entries[i].constructor==UNANArray) newarray.entries[i] = UNANArray.solve(newArray.entries[i]);
 return new Array; // function finishes at this point
@@ -99,7 +114,8 @@ constructor(a) {
 this.entries = [];
 for(var i=0; i<a.length; i++) this.entries.push(a[i]);
 }
-static solve(array) {
+solve() {
+var array = this;
 if(array.constructor!=ExEExpression) array = new ExEExpression(array);
 if(array.entries.length==1) return formatDecimal(Decimal.pow(10,array.entries[0]));
 var newArray = new ExEExpression(array); // variable for the stored array
@@ -115,7 +131,8 @@ constructor(a) {
 this.entries = [];
 for(var i=0; i<a.length; i++) this.entries.push(a[i]);
 }
-static solve(array) {
+solve() {
+var array = this;
 if(array.constructor!=HANArray) array = new HANArray(array);
 if(array.entries.length==1) return formatDecimal(factorial(array.entries[0]));
 var newArray = new HANArray(array); // variable for the stored array
@@ -124,6 +141,16 @@ if(newArray.entries[i].constructor==HANArray) newarray.entries[i] = HANArray.sol
 return new Array; // function finishes at this point
 }
 }
+}
+
+function calculate(a,n=20) {
+var notation = a.constructor;
+while(n>0) {
+n--;
+a = a.solve();
+if(a.constructor!=notation) return a;
+}
+return a;
 }
 
 </script>
