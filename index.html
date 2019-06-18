@@ -35,8 +35,8 @@ static solve(array) {
 if(array.constructor!=BANArray) array = new BANArray(array);
 if(array.entries.length==1||array.entries[1]==1) return formatDecimal(new Decimal(array.entries[0])); // if there's one entry, evaluate it as that. If the second entry is 1, it's the first entry.
 if(array.entries.length==2) return formatDecimal(Decimal.pow(array.entries[0],array.entries[1]));
-var newArray = new BANArray(array); // variable for the stored array
-var newArray2 = new BANArray(array); // second copy of the array
+var newArray = array; // variable for the stored array
+var newArray2 = array; // second copy of the array
 if(array.entries[array.entries.length-1]==1) {
 newArray.entries.pop(); // remove trailing 1s
 return newArray; // function breaks at this point if this rule was executed
