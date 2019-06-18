@@ -41,9 +41,11 @@ if(array.entries[array.entries.length-1]==1) {
 newArray.entries.pop(); // remove trailing 1s
 return newArray; // function breaks at this point if this rule was executed
 }
-for(var i=0; i<array.entries.length; i++) {
-if(newArray.entries[i].constructor==BANArray) newarray.entries[i] = BANArray.solve(newArray.entries[i]);
-return new Array; // function finishes at this point
+for(var i=0; i<newArray.entries.length; i++) {
+if(newArray.entries[i].constructor==BANArray) {
+newArray.entries[i] = BANArray.solve(newArray.entries[i]);
+return newArray; // function finishes at this point
+}
 }
 if(array.entries[2]>1) { // recursion rule
 newArray2.entries[1]--;
