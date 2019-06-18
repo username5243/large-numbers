@@ -33,26 +33,26 @@ for(var i=0; i<a.length; i++) this.entries.push(a[i]);
 }
 static solve(array) {
 if(array.constructor!=BANArray) array = new BANArray(array);
+var newArray = new BANArray(array.entries); // variable for the stored array
+var newerArray = new BANArray(newArray.entries); // second copy of the array
+for(var i=0;i<array.length;i++) {
+console.log(array.entries[i].constructor)
+if(array.entries[i].constructor==BANArray) {
+var temp = BANArray.solve(array.entries[i]);
+newArray.entries[i] = temp;
+return newArray;
+}
+}
 if(array.entries.length==1||array.entries[1]==1) return formatDecimal(new Decimal(array.entries[0])); // if there's one entry, evaluate it as that. If the second entry is 1, it's the first entry.
 if(array.entries.length==2) return formatDecimal(Decimal.pow(array.entries[0],array.entries[1]));
-var newArray = array; // variable for the stored array
-var newArray2 = array; // second copy of the array
 if(array.entries[array.entries.length-1]==1) {
 newArray.entries.pop(); // remove trailing 1s
 return newArray; // function breaks at this point if this rule was executed
 }
-var count = 0;
-while(count<newArray.length) {
-if(newArray.entries[count].constructor==BANArray) {
-newArray.entries[count] = BANArray.solve(newArray.entries[count]);
-return newArray; // function finishes at this point
-}
-count++;
-}
 if(array.entries[2]>1) { // recursion rule
 newArray.entries[2]--;
-newArray2.entries[1]--;
-newArray.entries[1] = newArray2;
+newerArray.entries[1]--;
+newArray.entries[1] = newerArray;
 return newArray;
 }
 }
