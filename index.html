@@ -78,7 +78,7 @@ for(var i=0; i<a.length; i++) this.entries.push(a[i]);
 }
 solve() {
 var array = this;
-if(array.constructor!=SANArray) array = new sANArray(array);
+if(array.constructor!=SANArray) array = new SANArray(array);
 var newArray = new SANArray(array.entries); // variable for the stored array
 var newerArray = new SANArray(newArray.entries); // second copy of the array
 for(var i=0;i<array.entries.length;i++) {
@@ -122,13 +122,43 @@ for(var j=0; j<a.length; j++) this.entries.push(a[j]);
 }
 solve() {
 var array = this;
-if(array.constructor!=UNANArray) array = new UNANArray(array);
-if(array.entries.length==1&&array.entries[0]==0) return formatDecimal(Decimal.mul(array.base,array.iterator));
-if(array.entries.length==1&&array.entries[0]==1) return formatDecimal(Decimal.pow(array.base,array.iterator));
 var newArray = new UNANArray(array.base,array.iterator,array.entries); // variable for the stored array
-for(var i=0; i<array.entries.length; i++) {
-if(newArray.entries[i].constructor==UNANArray) newarray.entries[i] = UNANArray.solve(newArray.entries[i]);
-return new Array; // function finishes at this point
+var newerArray = new UNANArray(newArray.base,newArray.iterator,newArray.entries); // second copy of the array
+if(array.base.constructor==UNANArray) {
+newArray.base = array.base.solve();
+return newArray;
+}
+if(array.iterator.constructor==UNANArray) {
+newArray.iterator = array.iterator.solve();
+return newArray;
+}
+for(var i=0;i<array.entries.length;i++) {
+if(array.entries[i].constructor==UNANArray) {
+var temp = array.entries[i].solve();
+newArray.entries[i] = temp;
+return newArray;
+}
+}
+if(array.entries.length==1&&array.entries[0]==0) return formatDecimal(Decimal.mul(array.base,array.iterator));
+if(array.entries[array.entries.length-1]==0) {
+newArray.entries.pop(); // remove trailing 1s
+return newArray; // function breaks at this point if this rule was executed
+}
+if(array.entries[0]>0) { // recursion rule
+newArray.entries[0]--;
+newerArray.iterator--;
+newArray.iterator = newerArray;
+return newArray;
+}
+if(array.entries[0]==0||array.entries[3]==1) { // Either 2nd or 3rd entry is 1. Must use the scanning process.
+for(var i=0;i<array.entries.length;i++) {
+if(array.entries[i]>0) {
+newArray.entries[i]--;
+newArray.entries[i-1] = newArray.iterator;
+newArray.iterator = newArray.base;
+return newArray;
+}
+}
 }
 }
 }
