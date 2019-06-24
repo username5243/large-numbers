@@ -171,11 +171,25 @@ for(var i=0; i<a.length; i++) this.entries.push(a[i]);
 solve() {
 var array = this;
 if(array.constructor!=ExEExpression) array = new ExEExpression(array);
-if(array.entries.length==1) return formatDecimal(Decimal.pow(10,array.entries[0]));
-var newArray = new ExEExpression(array); // variable for the stored array
+var newArray = new ExEExpression(array.entries); // variable for the stored array
+var newerArray = new ExEExpression(newArray.entries); // variable for the stored array
 for(var i=0; i<array.entries.length; i++) {
-if(newArray.entries[i].constructor==ExEExpression) newarray.entries[i] = ExEExpression.solve(newArray.entries[i]);
-return new Array; // function finishes at this point
+if(array.entries[i].constructor==ExEExpression) {
+var temp = array.entries[i].solve();
+newArray.entries[i] = temp;
+return newArray; // function finishes at this point
+}
+}
+if(array.entries.length==1) return formatDecimal(Decimal.pow(10,array.entries[0]));
+if(array.entries[array.entries.length-1]==1) {
+newArray.entries.pop(); // remove trailing 1s
+return newArray; // function breaks at this point if this rule was executed
+}
+if(array.entries[array.entries.length-1]>1) { // recursion rule
+newerArray.entries[array.entries.length-1]--;
+newArray.entries[newArray.entries.length-2] = newerArray;
+newArray.entries.pop();
+return newArray;
 }
 }
 }
@@ -192,7 +206,7 @@ if(array.entries.length==1) return formatDecimal(factorial(array.entries[0]));
 var newArray = new HANArray(array); // variable for the stored array
 for(var i=0; i<array.entries.length; i++) {
 if(newArray.entries[i].constructor==HANArray) newarray.entries[i] = HANArray.solve(newArray.entries[i]);
-return new Array; // function finishes at this point
+return newArray; // function finishes at this point
 }
 }
 }
