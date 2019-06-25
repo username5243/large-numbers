@@ -1,229 +1,54 @@
-<html>
-<head>
-<script type="text/javascript" src="logarithmica_numerus_lite.js"></script>
-<script>
-function formatDecimal(a) {
-a = new Decimal(a);
-var e = Math.floor(a.logarithm);
-if(e<308) return Math.round(Math.pow(10,a.logarithm));
-else if(e>308&&e<9e15) return Math.pow(10,a.logarithm-e)+"e+"+e;
-else if(e>9e15&&3<1e308) return "e"+e;
-else return "Infinity";
-}
+I broke the 8th wall, there is only chaos, Slabdrill is ritually sacrificing antimatter to the 9th dimension. This will be my last entry, may Hevipelle have mercy on our souls, we didn't listen, We should have listened.
+You have 3.20 SxOgMC-QtQiCeMI-SxDcQe Infinity points.Gain 2.87 SxOgMC-QaQiCeMI-QtNnOe Infinity points.
+You have 147.31 TNnCeMI-QtVgCe Eternity points.
+Gain 293.41 QtNnCeMI-ODcQu Eternity points.
+751.87 log(EP)/min
+Peaked at 3.38 K log(EP)/min
+You have 0 quarks.
+Quantum time: 42:29
+You have 187.61 QtDcNA-OQiScMC-QtStCeMI-OSc antimatter.
 
-function factorial(a) { // calculates a!
-a = new Decimal(a)
-if(a.lt(1000)&&(a.floor().sub(a).lt(new Decimal(0.000000000000001))||a.floor().sub(a).gt(new Decimal(0.999999999999999)))) { // is a an integer less than 1000? If so, calculate it exactly.
-var result = new Decimal(1);
-while(a.gte(1)) {
-result = result.mul(a);
-a = a.sub(1);
-}
-return new Decimal(result);
-}
-else { // if it's a non-integer, or over 1000, use Stirling's approximation. (Warning: Stirling's approximation is not exact. Inaccurate results for low non-integers are possible. Use with care.)
-return a.add(1/6).mul(Math.PI*2).pow(0.5).mul(a.div(Math.E).pow(a));
-}
-}
+You are getting 967.48 QtDcNA-OQiScMC-OStCeMI-SpStSc antimatter per second.
+Divide the tick interval by 1.98 QaQiDn.
+Cost: 19.18 QtDcNA-SpQiScMC-SxTgSiMI-UQi  Buy Max
+Tickspeed: 913 / 100 UStSiMC-QaTgMI-SpDcOe
+Dimensions  Options  Statistics  Achievements  Challenges  Infinity  Eternity  Quantum
+Dimensions	Infinity Dimensions	Time Dimensions	Meta DimensionsProduction
+You have 39.44 SxTgCe meta-antimatter.
 
-class BANArray {
-constructor(a) {
-this.entries = [];
-for(var i=0; i<a.length; i++) this.entries.push(a[i]);
-}
-solve() {
-var array = this;
-if(array.constructor!=BANArray) array = new BANArray(array);
-var newArray = new BANArray(array.entries); // variable for the stored array
-var newerArray = new BANArray(newArray.entries); // second copy of the array
-for(var i=0;i<array.entries.length;i++) {
-if(array.entries[i].constructor==BANArray) {
-var temp = array.entries[i].solve();
-newArray.entries[i] = temp;
-return newArray;
-}
-}
-if(array.entries.length==1||array.entries[1]==1) return formatDecimal(new Decimal(array.entries[0])); // if there's one entry, evaluate it as that. If the second entry is 1, it's the first entry.
-if(array.entries.length==2) return formatDecimal(Decimal.pow(array.entries[0],array.entries[1]));
-if(array.entries[array.entries.length-1]==1) {
-newArray.entries.pop(); // remove trailing 1s
-return newArray; // function breaks at this point if this rule was executed
-}
-if(array.entries[2]==1) { // if the third entry is 1, and we've hit this point in the function, we must have at least 1 non-1 entry from the 4th entry onwards.
-for(var i=3;i<array.entries.length;i++) {
-if(array.entries[i]>1) {
-newArray.entries[i]--;
-newerArray.entries[1]--;
-for(var j=1;j<i-1;j++) newArray.entries[j]=newArray.entries[0];
-newArray.entries[i-1] = newerArray;
-return newArray;
-}
-}
-}
-if(array.entries[2]>1) {
-if(array.entries[2]>1) { // recursion rule
-newArray.entries[2]--;
-newerArray.entries[1]--;
-newArray.entries[1] = newerArray;
-return newArray;
-}
-}
-}
-}
+Your best meta-antimatter for this quantum was 39.44 SxTgCe. Translated to 9.11 MI-QaStTcx extra multiplier per dimension boost.
 
-class SANArray {
-constructor(a) {
-this.entries = [];
-for(var i=0; i<a.length; i++) this.entries.push(a[i]);
-}
-solve() {
-var array = this;
-if(array.constructor!=SANArray) array = new SANArray(array);
-var newArray = new SANArray(array.entries); // variable for the stored array
-var newerArray = new SANArray(newArray.entries); // second copy of the array
-for(var i=0;i<array.entries.length;i++) {
-if(array.entries[i].constructor==SANArray) {
-var temp = array.entries[i].solve();
-newArray.entries[i] = temp;
-return newArray;
-}
-}
-if(array.entries.length==1) return formatDecimal(new Decimal(array.entries[0])); // if there's one entry, evaluate it as that. 
-if(array.entries.length==2) return formatDecimal(Decimal.pow(array.entries[0],array.entries[1]));
-if(array.entries[array.entries.length-1]==1) {
-newArray.entries.pop(); // remove trailing 1s
-return newArray; // function breaks at this point if this rule was executed
-}
-if(array.entries[2]>1) { // recursion rule
-newArray.entries[2]--;
-newerArray.entries[1]--;
-newArray.entries[1] = newerArray;
-return newArray;
-}
-if(array.entries[2]==1||array.entries[3]==1) { // Either 2nd or 3rd entry is 1. Must use the scanning process.
-for(var i=2;i<array.entries.length;i++) {
-if(array.entries[i]>1) {
-newArray.entries[i]--;
-newArray.entries[i-1] = newArray.entries[1];
-for(var j=1;j<i-1;j++) newArray.entries[j]=newArray.entries[0];
-return newArray;
-}
-}
-}
-}
-}
+Your best-ever meta-antimatter was 64.48 ODcTc.
 
-class UNANArray {
-constructor(b,i,a) {
-this.base = b;
-this.iterator = i;
-this.entries = [];
-for(var j=0; j<a.length; j++) this.entries.push(a[j]);
-}
-solve() {
-var array = this;
-var newArray = new UNANArray(array.base,array.iterator,array.entries); // variable for the stored array
-var newerArray = new UNANArray(newArray.base,newArray.iterator,newArray.entries); // second copy of the array
-if(array.base.constructor==UNANArray) {
-newArray.base = array.base.solve();
-return newArray;
-}
-if(array.iterator.constructor==UNANArray) {
-newArray.iterator = array.iterator.solve();
-return newArray;
-}
-for(var i=0;i<array.entries.length;i++) {
-if(array.entries[i].constructor==UNANArray) {
-var temp = array.entries[i].solve();
-newArray.entries[i] = temp;
-return newArray;
-}
-}
-if(array.entries.length==1&&array.entries[0]==0) return formatDecimal(Decimal.mul(array.base,array.iterator));
-if(array.entries[array.entries.length-1]==0) {
-newArray.entries.pop(); // remove trailing 1s
-return newArray; // function breaks at this point if this rule was executed
-}
-if(array.entries[0]>0) { // recursion rule
-newArray.entries[0]--;
-newerArray.iterator--;
-newArray.iterator = newerArray;
-return newArray;
-}
-if(array.entries[0]==0||array.entries[3]==1) { // Either 2nd or 3rd entry is 1. Must use the scanning process.
-for(var i=0;i<array.entries.length;i++) {
-if(array.entries[i]>0) {
-newArray.entries[i]--;
-newArray.entries[i-1] = newArray.iterator;
-newArray.iterator = newArray.base;
-return newArray;
-}
-}
-}
-}
-}
+You are getting 178.09 QtTgCe meta-antimatter per second.
 
-class ExEExpression {
-constructor(a) {
-this.entries = [];
-for(var i=0; i<a.length; i++) this.entries.push(a[i]);
-}
-solve() {
-var array = this;
-if(array.constructor!=ExEExpression) array = new ExEExpression(array);
-var newArray = new ExEExpression(array.entries); // variable for the stored array
-var newerArray = new ExEExpression(newArray.entries); // variable for the stored array
-for(var i=0; i<array.entries.length; i++) {
-if(array.entries[i].constructor==ExEExpression) {
-var temp = array.entries[i].solve();
-newArray.entries[i] = temp;
-return newArray; // function finishes at this point
-}
-}
-if(array.entries.length==1) return formatDecimal(Decimal.pow(10,array.entries[0]));
-if(array.entries[array.entries.length-1]==1) {
-newArray.entries.pop(); // remove trailing 1s
-return newArray; // function breaks at this point if this rule was executed
-}
-if(array.entries[array.entries.length-1]>1) { // recursion rule
-newerArray.entries[array.entries.length-1]--;
-newArray.entries[newArray.entries.length-2] = newerArray;
-newArray.entries.pop();
-return newArray;
-}
-}
-}
-
-class HANArray {
-constructor(a) {
-this.entries = [];
-for(var i=0; i<a.length; i++) this.entries.push(a[i]);
-}
-solve() {
-var array = this;
-if(array.constructor!=HANArray) array = new HANArray(array);
-if(array.entries.length==1) return formatDecimal(factorial(array.entries[0]));
-var newArray = new HANArray(array); // variable for the stored array
-for(var i=0; i<array.entries.length; i++) {
-if(newArray.entries[i].constructor==HANArray) newarray.entries[i] = HANArray.solve(newArray.entries[i]);
-return newArray; // function finishes at this point
-}
-}
-}
-
-function calculate(a,n=20) {
-var notation = a.constructor;
-while(n>0) {
-n--;
-a = a.solve();
-if(a.constructor!=notation) return a;
-}
-return a;
-}
-
-</script>
-</head>
-<body>
-Test
-</body>
-</html>
+Max all (M)
+First Meta Dimension x15.16 QtTg	
+317.96 TSe (0) (+0.55%/s)
+Auto: ON	Cost: 100 SxTgCe MA
+Second Meta Dimension x445.89 SpVg	
+3.91 SxSt (0) (+0.54%/s)
+Auto: ON	Cost: 10 SpTgCe MA
+Third Meta Dimension x14.07 QaVg	
+1.24 OTg (0) (+0.33%/s)
+Auto: ON	Cost: 10 SpTgCe MA
+Fourth Meta Dimension x970.73 UVg	
+363.22 QaTg (0) (+0.27%/s)
+Auto: ON	Cost: 10 SpTgCe MA
+Fifth Meta Dimension x2.48 NDc	
+16.59 SpDc (0) (+0.14%/s)
+Auto: ON	Cost: 10 OTgCe MA
+Sixth Meta Dimension x4.62 SpDc	
+2.09 SxDc (0) (+0.13%/s)
+Auto: ON	Cost: 1 SpTgCe MA
+Seventh Meta Dimension x697.47 QtDc	
+330 (0)
+Auto: ON	Cost: 10 SpTgCe MA
+Eighth Meta Dimension x105.25 QaDc	
+260 (0)
+Auto: ON	Cost: 10 SpTgCe MA
+Meta-Dimension Boost (48): requires 262 Eighth Meta Dimensions	Reset meta-dimensions for a boost
+Quantum: requires 931.83 SpQdCe meta-antimatter and 1 SpDcNA-NQdSiMC-NNnNeMI-NNnNe antimatter	Lose all your previous progress, but get a boost
+Meta-boost auto: ON  Toggle all meta-dims autobuyer ON/OFF
+How to play | About | Changelog
+92.31%
